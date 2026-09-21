@@ -48,7 +48,7 @@ cells:
     buffer_without_load:            # must match the .subckt name in the netlist
         netlist: cells/buffer_pex_dcfix.spice
         models:
-            - /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+            - /pdks/libs.tech/ngspice/sky130.lib.spice tt
         # CharLib upper-cases pin names from the .subckt line, so use upper case here
         inputs:  [A]
         outputs: ['Y']              # quotes required: bare Y is read as boolean true in YAML
