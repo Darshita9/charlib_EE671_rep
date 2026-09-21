@@ -1,1 +1,58 @@
+# CharLib config for the buffer PEX netlist (sky130A, Magic-extracted)
+# Cell behaviour, read from the netlist:
+#   .subckt buffer_without_load a y vdd vss
+#   two inverters in series (A -> a_n40_n46# -> Y)  =>  Y = A  (non-inverting buffer)
+#
+# NETLIST NOTE: the extracted netlist has a node "z" that is not a port and touches
+# no transistor, only capacitors. ngspice prints "singular matrix: check node z" and
+# has to fall back to a pseudo-transient start. buffer_pex_dcfix.spice is the same
+# netlist plus one line ("Rz_dc z vss 1G") that gives z a DC path. With it, the
+# warnings disappear and delay/transition tables are identical. To use the untouched
+# netlist instead, change "netlist:" below to buffer_pex.spice.
+#
+# Assumes the iic-osic-tools layout (PDK_ROOT=/foss/pdks) and that you run
+# charlib from the folder holding this file and the netlist.
+# Run:  charlib run buffer_pex.yaml -j4
 
+settings:
+    lib_name: buffer_pex_sky130_tt_1v80_025C
+    units:
+        time:               ns
+        voltage:            V
+        current:            uA
+        pulling_resistance: kOhm
+        leakage_power:      nW
+        capacitive_load:    pF
+        energy:             fJ
+    named_nodes:
+        primary_power:
+            name:    VDD
+            voltage: 1.8
+        primary_ground:
+            name:    VSS
+            voltage: 0
+        nwell:                      # the netlist has no well pins; avoids a stray 3.3 V source
+            name:    VNW
+            voltage: 1.8
+        pwell:
+            name:    VPW
+            voltage: 0
+    temperature: 25
+    simulation:
+        backend: ngspice-shared     # use ngspice-subprocess if libngspice is missing
+    results_dir: results
+    debug: false                    # set true to keep every generated .sp testbench in ./debug
+    omit_on_failure: false
+
+cells:
+    buffer_without_load:            # must match the .subckt name in the netlist
+        netlist: buffer_pex_dcfix.spice
+        models:
+            - /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+        # CharLib upper-cases pin names from the .subckt line, so use upper case here
+        inputs:  [A]
+        outputs: ['Y']              # quotes required: bare Y is read as boolean true in YAML
+        functions:
+            - Y=A
+        data_slews: [0.01, 0.05, 0.2, 1.0]          # ns
+        loads:      [0.0005, 0.002, 0.01, 0.05]     # pF Once try this..
