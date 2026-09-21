@@ -29,13 +29,11 @@ settings:
 
   temperature: 25
 
-  # Avoid the ngspice-shared failure while parsing agauss(...)
-  # expressions in the Sky130 model files.
   simulation:
     backend: ngspice-subprocess
 
   results_dir: results
-  debug: true
+  debug: false
   omit_on_failure: false
 
 cells:
