@@ -2,7 +2,7 @@
 
 .subckt buffer_without_load A Y VDD VSS 
 * NGSPICE file created from buffer_p1.ext - technology: sky130A
-
+Rz_dc z VSS 1G
 X0 y a_n40_n46# vdd vdd sky130_fd_pr__pfet_01v8 ad=0.414 pd=3.36 as=0.414 ps=3.36 w=1.38 l=0.15
 X1 a_n40_n46# a vss vss sky130_fd_pr__nfet_01v8 ad=0.1504 pd=1.58 as=0.1504 ps=1.58 w=0.47 l=0.15
 X2 a_n40_n46# a vdd vdd sky130_fd_pr__pfet_01v8 ad=0.414 pd=3.36 as=0.414 ps=3.36 w=1.38 l=0.15
