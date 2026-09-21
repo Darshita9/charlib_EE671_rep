@@ -1,1 +1,26 @@
+* 3. TOP-LEVEL SUBCIRCUIT FOR LVS (buffer_without_load)
+
+.subckt buffer_without_load A Y VDD VSS 
+* NGSPICE file created from buffer_p1.ext - technology: sky130A
+
+X0 y a_n40_n46# vdd vdd sky130_fd_pr__pfet_01v8 ad=0.414 pd=3.36 as=0.414 ps=3.36 w=1.38 l=0.15
+X1 a_n40_n46# a vss vss sky130_fd_pr__nfet_01v8 ad=0.1504 pd=1.58 as=0.1504 ps=1.58 w=0.47 l=0.15
+X2 a_n40_n46# a vdd vdd sky130_fd_pr__pfet_01v8 ad=0.414 pd=3.36 as=0.414 ps=3.36 w=1.38 l=0.15
+X3 y a_n40_n46# vss vss sky130_fd_pr__nfet_01v8 ad=0.1504 pd=1.58 as=0.1504 ps=1.58 w=0.47 l=0.15
+C0 a vdd 0.08914f
+C1 z a 0.00205f
+C2 y vdd 0.21931f
+C3 z vdd 0.00926f
+C4 z y 0.0013f
+C5 a a_n40_n46# 0.047f
+C6 vdd a_n40_n46# 0.36026f
+C7 y a_n40_n46# 0.03813f
+C8 z a_n40_n46# 0.02103f
+C9 z vss 0.03622f
+C10 y vss 0.11593f
+C11 a vss 0.23129f
+C12 vdd vss 1.10167f
+C13 a_n40_n46# vss 0.33492f
+.ends buffer_without_load
+
 
